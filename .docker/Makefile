@@ -32,3 +32,7 @@ fresh:
 	docker-compose exec app php artisan migrate:fresh --seed
 tinker:
 	docker-compose exec app php artisan tinker
+npm-install:
+	docker-compose run --rm npm install
+npm-run-dev:
+	docker-compose run --rm npm run dev
