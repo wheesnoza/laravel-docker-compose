@@ -65,7 +65,7 @@ services:
     container_name: ${APP_NAME:-laravel}_redis
     tty: true
     volumes:
-      - ./redis/storage:/data
+      - .docker/redis/storage:/data
     ports:
       - 6379:6379
     networks: 
