@@ -8,7 +8,7 @@ init:
 	@make up
 	docker-compose exec app php artisan key:generate
 	docker-compose exec app php artisan storage:link
-	@restart
+	@make restart
 	@make migrate
 reinit:
 	@make destroy
