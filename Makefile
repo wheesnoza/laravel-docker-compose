@@ -6,7 +6,7 @@ ifdef workdir
   WORKDIR = ${workdir}
 endif
 create-project:
-	docker run --rm -v ${PWD}:/app 708u/composer:1.9.3 composer create-project --prefer-dist laravel/laravel${VERSION} ${WORKDIR}
+	docker run --rm -v ${PWD}:/app composer:latest composer create-project --prefer-dist laravel/laravel${VERSION} ${WORKDIR}
 	cp docker-compose.yml ${WORKDIR} \
 	&& mkdir ${WORKDIR}/.docker \
 	&& cp -R .docker/mysql ${WORKDIR}/.docker \
