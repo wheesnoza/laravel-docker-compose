@@ -1,21 +1,21 @@
 version: '3'
 
-networks: 
+networks:
   laravel:
 
-services: 
+services:
   nginx:
     image: nginx:stable-alpine
     container_name: ${APP_NAME:-laravel}_nginx
     ports:
       - "80:80"
-    volumes: 
+    volumes:
       - .:/var/www/html
       - .docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    depends_on: 
+    depends_on:
       - app
       - db
-    networks: 
+    networks:
       - laravel
 
   db:
@@ -23,7 +23,7 @@ services:
     image: mysql:5.7.22
     restart: unless-stopped
     tty: true
-    ports: 
+    ports:
       - "3306:3306"
     volumes:
       - .docker/mysql/storage:/var/lib/mysql
@@ -35,31 +35,31 @@ services:
       MYSQL_ROOT_PASSWORD: secret
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
-    networks: 
+    networks:
       - laravel
 
   app:
-    build: 
+    build:
      context: .
      dockerfile: .docker/php/Dockerfile
     container_name: ${APP_NAME:-laravel}_app
-    volumes: 
+    volumes:
       - .:/var/www/html
-    ports: 
+    ports:
       - "9000:9000"
-    networks: 
+    networks:
       - laravel
 
   npm:
     image: node:13.7
     container_name: ${APP_NAME:-laravel}_npm
-    volumes: 
+    volumes:
       - .:/var/www/html
     working_dir: /var/www/html
     entrypoint: ['npm']
-    networks: 
+    networks:
       - laravel
-  
+
   redis:
     image: redis:latest
     container_name: ${APP_NAME:-laravel}_redis
@@ -68,5 +68,14 @@ services:
       - .docker/redis/storage:/data
     ports:
       - 6379:6379
-    networks: 
+    networks:
+      - laravel
+
+  composer:
+    image: composer:latest
+    container_name: ${APP_NAME:-laravel}_composer
+    volumes:
+    - .:/var/www/html
+    working_dir: /var/www/html
+    networks:
       - laravel
