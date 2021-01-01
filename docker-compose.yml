@@ -20,7 +20,7 @@ services:
 
   db:
     container_name: ${APP_NAME:-laravel}_db
-    image: mysql:5.7.22
+    image: mysql:5.7
     restart: unless-stopped
     tty: true
     ports:
