@@ -6,6 +6,9 @@ init:
 	cp .env.example .env
 	@make build
 	@make up
+	@make composer update
+	@make npm install
+	@make npm run dev
 	docker-compose exec app php artisan key:generate
 	docker-compose exec app php artisan storage:link
 	@make restart
