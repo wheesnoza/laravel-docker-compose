@@ -35,6 +35,14 @@ fresh:
 	docker-compose exec app php artisan migrate:fresh --seed
 tinker:
 	docker-compose exec app php artisan tinker
+test:
+	docker-compose exec app php artisan test
+	docker-compose exec app php artisan dusk
+optimize:
+	@make composer dump-autoload && \
+    docker-compose exec app php artisan optimize:clear
+app-bash:
+	docker-compose exec app /bin/sh
 
 .PHONY: npm
 ifeq (npm,$(firstword $(MAKECMDGOALS)))
